@@ -2,6 +2,7 @@ let uniqueCategories;
 let allWorks;
 let sectionFilter = document.querySelector(".filters");
 
+
 // Get all the works
 const getWorks = async () => {
   const works = await fetch("http://localhost:5678/api/works");
@@ -82,22 +83,45 @@ logElement.addEventListener("click", function (event) {
   else {
     window.localStorage.removeItem("Token");
     logElement.textContent = "login";
+    window.location.href = "./index.html";
   }
 });
 
 if (userToken !== null) {
   logElement.textContent = "logout";
-
   const elemEdition = document.createElement('div');
   elemEdition.className = "editionMode"
-  const para = document.createElement('p');
+  const elemSpan = document.createElement('span');
   const iconElement = document.createElement('i');
   iconElement.className = "fa-regular fa-pen-to-square";
-  const paraText = document.createTextNode("Mode édition");
-  para.appendChild(iconElement);
-  para.appendChild(paraText);
-  elemEdition.appendChild(para);
+  const spanText = document.createTextNode("Mode édition");
+  elemSpan.appendChild(iconElement);
+  elemSpan.appendChild(spanText);
+  elemEdition.appendChild(elemSpan);
   document.body.insertBefore(elemEdition, document.body.firstChild);
+
+  sectionFilter.style.display = "none";
+
+  const elemTitle = document.createElement('div');
+  elemTitle.className = "projectTitle";
+  
+  const portSection = document.getElementById("portfolio");
+  const titleP = portSection.querySelector("h2");
+  const iconElement2 = document.createElement('i');
+  iconElement2.className = "fa-regular fa-pen-to-square";
+  const editSpan = document.createElement('span');
+  const editText = document.createTextNode("modifier");
+
+  editSpan.appendChild(iconElement2);
+  editSpan.appendChild(editText);
+ 
+
+  elemTitle.appendChild(titleP);
+  elemTitle.appendChild(editSpan);
+
+
+  portSection.insertBefore(elemTitle, portSection.firstChild);
+  console.log(portSection);
 }
 
 else {

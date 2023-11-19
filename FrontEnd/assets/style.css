@@ -22,6 +22,7 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -71,6 +72,7 @@ h1{
 	color: #B1663C
 }
 
+
 h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
@@ -93,10 +95,16 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	cursor: pointer;
 }
 
-li:hover {
+li a:hover {
 	color: #B1663C;
+}
+a {
+	text-decoration: none;
+	color:inherit;
+	font-family: inherit;
 }
 #introduction {
 	display: flex;
@@ -137,6 +145,51 @@ li:hover {
 	width: 100%;
 
 }
+
+.filters {
+	display:flex;
+    justify-content: center;
+    gap: 10px;
+}
+.filters button {
+	color: #1D6154;
+    border: 0.1em solid #1D6154;
+    border-radius: 1.5em;
+    padding: 5px 16px;
+    background-color: transparent;
+	font-family: 'Syne';
+	cursor: pointer;
+	font-size: 1.2em;
+}
+
+.filters button:hover {
+	background-color: #1D6154;
+	color:white;
+}
+
+section.loginSection {
+	width:50%;
+	justify-content: center;
+	margin: auto;
+}
+
+.loginSection form{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap :30px;
+	align-items: center;
+}
+
+.formGroup {
+	display:flex;
+	flex-direction: column;
+}
+
+.errorMessage {
+ display:none;
+}
+
 #contact {
 	width: 50%;
 margin: auto;
@@ -184,5 +237,12 @@ footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
+}
+
+.footerSection {
+	position: fixed;
+	bottom: 0; 
+	left: 0;
+	width: 100%;
 }
 

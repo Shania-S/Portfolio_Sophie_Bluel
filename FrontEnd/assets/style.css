@@ -133,6 +133,23 @@ a {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+.editionMode {
+	display:flex;
+	background-color: black;
+	width:100vw;
+	color:white;
+	margin-left : calc(-1 * ((100vw - 100%) / 2));
+	height: 50px;
+	justify-content: center;
+	align-items: center;
+}
+
+.editionMode p {
+    display: flex;
+	gap: 10px;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -239,10 +256,15 @@ footer nav ul {
 	margin: 2em
 }
 
+footer {
+	background-color: #1D6154;
+}
+
 .footerSection {
 	position: fixed;
 	bottom: 0; 
 	left: 0;
 	width: 100%;
+	
 }
 

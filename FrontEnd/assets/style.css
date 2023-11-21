@@ -24,6 +24,8 @@ time, mark, audio, video {
 	vertical-align: baseline;
 
 }
+
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -49,18 +51,24 @@ table {
 }
 /** end reset css**/
 body {
-	max-width: 1140px;
-	margin:auto;
+	
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background-color: #FFFCF6;
 }
+
+main {
+	max-width: 1140px;
+	margin:auto;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 100px;
 }
 section {
-	margin: 50px 0
+	margin: 50px 0;
 }
 
 h1{
@@ -86,6 +94,7 @@ h2{
 	font-size: 30px;
 	color: #1D6154
 }
+
 nav ul {
 	display: flex;
 	align-items: center;
@@ -115,8 +124,8 @@ a {
 }
 #introduction img {
 	display: block;
-	margin: auto;
-	width: 80%;
+	
+	width: 85%;
 }
 
 #introduction article {
@@ -149,7 +158,12 @@ a {
     display: flex;
 	gap: 10px;
 }
-
+.projectTitle {
+	display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 10px;
+}
 .gallery {
 	width: 100%;
 	display: grid;
@@ -184,13 +198,13 @@ a {
 	color:white;
 }
 
-section.loginSection {
+section#login {
 	width:50%;
 	justify-content: center;
 	margin: auto;
 }
 
-.loginSection form{
+#login form{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -201,10 +215,49 @@ section.loginSection {
 .formGroup {
 	display:flex;
 	flex-direction: column;
+	width: 60%;
+    gap: 10px;
+}
+
+.formGroup input {
+   height: 38px;
+   border: none;
+   box-shadow: 0px 0px 13px 0px lightgrey;
+}
+
+.formGroup label {
+	font-weight: 600;
+    color: #403d3d;
+}
+
+.forgottenPsw {
+	font-weight: 600;
+    color: #403d3d;
+	text-decoration-line: underline;
+	text-decoration-style: solid ;
+}
+
+#loginBtn {
+	border-radius: 30px;
+    border: none;
+    padding: 8px 35px;
+    color: white;
+    background-color: #1D6154;
+	cursor: pointer;
+}
+
+.errorMessage:before {
+	font-family: FontAwesome;
+    content: "\f00d";
+    float: left;
+    font-size: medium;
+    margin-right: 5px;
 }
 
 .errorMessage {
  display:none;
+ color:red;
+ font-weight: 600;
 }
 
 #contact {
@@ -251,13 +304,16 @@ input[type="submit"]{
 }
 
 footer nav ul {
-	display: flex;
-	justify-content: flex-end;
-	margin: 2em
+	margin: 0 10em;
 }
 
 footer {
-	background-color: #1D6154;
+	background-color: #ffffff;
+	width:100%;
+	height:50px;
+	display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
 .footerSection {
@@ -265,6 +321,5 @@ footer {
 	bottom: 0; 
 	left: 0;
 	width: 100%;
-	
 }
 

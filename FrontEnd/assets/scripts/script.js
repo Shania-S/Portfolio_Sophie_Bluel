@@ -8,6 +8,7 @@ const closeModal = document.getElementById("closeModal");
 let galleryModal = document.querySelector(".galleryModal");
 const userToken = window.localStorage.getItem("Token");
 const logElement = document.getElementById("logLink");
+let arrowIcon = document.getElementById("closeFormModal");
 
 
 /**Déclaration des fonctions */
@@ -107,10 +108,16 @@ function displayModalGallery () {
     trashCanIcon.className ="fa-solid fa-trash-can";
     
     removeWorkBtn.appendChild(trashCanIcon);
-    // créer bouton
+    
     galleryModal.appendChild(figure);
     figure.appendChild(image);
     figure.appendChild(removeWorkBtn);
+    arrowIcon.style.display="none";
+
+    removeWorkBtn.addEventListener("click", function ()  {
+     console.log(`clickk ${image.id}`);
+     deleteWork(image.id);
+    });
   }
 }
 
@@ -127,6 +134,16 @@ function displayModalGallery () {
     } else {
       displayWorks(allWorks);
     }
+  }
+
+  function deleteWork(workId) {
+    fetch(`http://localhost:5678/api/works/${workId}`,  {
+      method: 'DELETE',
+      headers: {
+        'Content-Type':'application/json',
+        'authorization': `Bearer ${userToken}`
+      },
+    })
   }
 
 /**Déclaration des event listeners */

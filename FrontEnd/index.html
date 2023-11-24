@@ -24,7 +24,7 @@
 	<nav>
 		<ul>
 			<li><a href="#">projets</a></li>
-            <li><a href="#">contact</a></li>
+            <li><a href="#contact">contact</a></li>
 			<li><a id="logLink">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
@@ -42,6 +42,26 @@
 			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 		</article>
 	</section>
+	<aside  class="modalContainer" id="modal_container" aria-hidden="true" role="dialog">
+		<div class="modal">
+			<div class="modalControls">
+				<i class="fa-solid fa-arrow-left" id="closeFormModal"></i>
+				<i class="fa-solid fa-xmark" id="closeModal"></i>
+			</div>
+			
+			<div class="galleryContainer">
+                <h2>Galerie photo</h2>
+				<div class="galleryModal">
+
+				</div>
+				<button id="addImageBtn">Ajouter une photo</button>
+			</div>
+			<form>
+
+			</form>	
+		</div>
+	</aside>
+
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
 		<section class="filters">

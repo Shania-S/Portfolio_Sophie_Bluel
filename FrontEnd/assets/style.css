@@ -55,6 +55,7 @@ body {
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 	background-color: #FFFCF6;
+	
 }
 
 main {
@@ -140,15 +141,14 @@ a {
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+
 }
 
 .editionMode {
 	display:flex;
 	background-color: black;
-	width:100vw;
+	width:100%;
 	color:white;
-	margin-left : calc(-1 * ((100vw - 100%) / 2));
 	height: 50px;
 	justify-content: center;
 	align-items: center;
@@ -161,9 +161,19 @@ a {
 .projectTitle {
 	display: flex;
     justify-content: center;
-    align-items: baseline;
+    align-items: center;
     gap: 10px;
+    margin-bottom: 50px;
 }
+
+.projectTitle a  {
+	display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 5px;
+	cursor: pointer;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -198,6 +208,101 @@ a {
 	color:white;
 }
 
+/*Styling modal */
+.modalContainer {
+  position: fixed;
+  top:0;
+  left:0;
+  height:100%;
+  width:100%;
+  background: rgba(0,0,0,0.8);
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  opacity:0;
+  pointer-events: none;
+}
+
+.modalContainer .modal i {
+	float:right;
+	font-size: 1.2em;
+	cursor: pointer;
+}
+
+.modalContainer.show {
+	opacity:1;
+	pointer-events: auto;
+}
+
+.modal {
+	background-color: #FFF;
+	width:430px;
+	height: 505px;
+    border-radius: 10px;
+	box-sizing: border-box;
+	padding:30px;
+	max-width: 100%;
+}
+
+.galleryContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin:20px;
+}
+
+.galleryContainer h2{
+   color:black;
+   font-size:1.5em;
+   font-weight: normal;
+}
+
+.galleryModal {
+    width: 90%;
+    height: 350px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-column-gap: 10px;
+	grid-row-gap: 25px;
+    padding: 50px 0;
+    box-sizing: border-box;
+	border-bottom: 1px solid grey;
+}
+
+.galleryModal figure {
+  height: 70px;
+  position:relative;
+}
+
+.galleryModal img {
+    width: 100%;
+    height: 100%;
+}
+
+.galleryModal figure i{
+	color: white;
+  }
+
+.galleryModal .removeWork {
+  position: absolute;
+  top: 0;
+  right:0;
+  background-color: black;
+}
+
+#addImageBtn {
+	margin-top: 25px;
+    border-radius: 15px;
+    box-sizing: border-box;
+    padding: 5px 35px;
+    background-color: #1D6154;
+    color: white;
+	border:none;
+	cursor: pointer;
+}
+
+/*Styling modal */
 section#login {
 	width:50%;
 	justify-content: center;

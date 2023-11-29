@@ -5,10 +5,13 @@ let sectionFilter = document.querySelector(".filters");
 let editWorks;
 const modal_container = document.getElementById("modal_container");
 const closeModal = document.getElementById("closeModal");
+const galleryContainer = document.querySelector(".galleryContainer");
 let galleryModal = document.querySelector(".galleryModal");
 const userToken = window.localStorage.getItem("Token");
 const logElement = document.getElementById("logLink");
-let arrowIcon = document.getElementById("closeFormModal");
+let closeFormModal = document.getElementById("closeFormModal");
+const addImageBtn = document.getElementById("addImageBtn");
+const ajoutPhotoForm = document.querySelector("ajoutPhotoForm");
 
 
 /**Déclaration des fonctions */
@@ -112,7 +115,7 @@ function displayModalGallery () {
     galleryModal.appendChild(figure);
     figure.appendChild(image);
     figure.appendChild(removeWorkBtn);
-    arrowIcon.style.display="none";
+   
 
     removeWorkBtn.addEventListener("click", function ()  {
      console.log(`clickk ${image.id}`);
@@ -141,7 +144,7 @@ function displayModalGallery () {
       method: 'DELETE',
       headers: {
         'Content-Type':'application/json',
-        'authorization': `Bearer ${userToken}`
+        'Authorization': `Bearer ${userToken}`
       },
     })
   }
@@ -170,6 +173,16 @@ closeModal.addEventListener("click", function ()  {
   modal_container.classList.remove("show");
 });
 
+closeFormModal.addEventListener("click", function () {
+  galleryContainer.style.visibility = "visible";
+  closeFormModal.style.display = "none";
+});
+
+addImageBtn.addEventListener("click", function () {
+  galleryContainer.style.visibility  = "hidden";
+  closeFormModal.style.display ="block";
+  console.log("jjj");
+});
 
 /**Séquence de code */
 getWorks();

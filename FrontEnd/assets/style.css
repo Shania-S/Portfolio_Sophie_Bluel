@@ -184,7 +184,7 @@ a {
 
 .gallery img {
 	width: 100%;
-
+    height: 490px;
 }
 
 .filters {
@@ -223,10 +223,18 @@ a {
   pointer-events: none;
 }
 
-.modalContainer .modal i {
+.modalContainer .modal .modalControls i:nth-child(1) {
+	float:left;
+	font-size: 1.2em;
+	cursor: pointer;
+	display: none;
+}
+
+.modalContainer .modal .modalControls i:nth-child(2) {
 	float:right;
 	font-size: 1.2em;
 	cursor: pointer;
+	
 }
 
 .modalContainer.show {
@@ -263,8 +271,10 @@ a {
     height: 350px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-column-gap: 10px;
-	grid-row-gap: 25px;
+	grid-auto-rows: 70px;
+    grid-column-gap: 7px;
+	grid-row-gap: 18px;
+	overflow-y: auto;
     padding: 50px 0;
     box-sizing: border-box;
 	border-bottom: 1px solid grey;
@@ -282,13 +292,20 @@ a {
 
 .galleryModal figure i{
 	color: white;
+	font-size:0.7em;
+	cursor: pointer;
   }
 
 .galleryModal .removeWork {
-  position: absolute;
-  top: 0;
-  right:0;
-  background-color: black;
+	position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: black;
+    margin: 5px 5px 0px 0px;
+    padding: 3px 3px;
+    border: none;
+    border-radius: 2px;
+    display: flex;
 }
 
 #addImageBtn {
@@ -300,6 +317,10 @@ a {
     color: white;
 	border:none;
 	cursor: pointer;
+}
+
+.ajoutPhotoForm {
+	visibility: hidden;
 }
 
 /*Styling modal */

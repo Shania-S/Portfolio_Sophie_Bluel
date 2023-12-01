@@ -11,8 +11,9 @@ const userToken = window.localStorage.getItem("Token");
 const logElement = document.getElementById("logLink");
 let closeFormModal = document.getElementById("closeFormModal");
 const addImageBtn = document.getElementById("addImageBtn");
-const ajoutPhotoForm = document.querySelector("ajoutPhotoForm");
-
+const ajoutPhotoForm = document.querySelector(".ajoutPhotoForm");
+const ajoutPhotoBtn = document.getElementById("ajoutPhotoBtn");
+const imageContainer = document.querySelector(".imageContainer");
 
 /**Déclaration des fonctions */
 /* Cette fonction récupère la liste des travaux via la requête fetch */
@@ -173,16 +174,56 @@ closeModal.addEventListener("click", function ()  {
   modal_container.classList.remove("show");
 });
 
-closeFormModal.addEventListener("click", function () {
-  galleryContainer.style.visibility = "visible";
-  closeFormModal.style.display = "none";
+/* Quand l'utilisateur clique sur le bouton ajouter photo
+   Affiche le formulaire */
+addImageBtn.addEventListener("click", function () {
+  galleryContainer.style.display  = "none";
+  closeFormModal.style.display = "block";
+  ajoutPhotoForm.style.display = "flex";
+
+  // add fetch request
 });
 
-addImageBtn.addEventListener("click", function () {
-  galleryContainer.style.visibility  = "hidden";
-  closeFormModal.style.display ="block";
-  console.log("jjj");
+/* Quand l'utilisateur clique sur le bouton ajouter photo
+   dans le formulaire */
+ajoutPhotoBtn.addEventListener("click", function () {
+  
+  let input = document.createElement('input');
+  input.type = 'file';
+  input.onchange = _ => {
+            let files =   Array.from(input.files);
+            console.log(files[0]);
+            const selectedImg = files[0];
+
+            const reader = new FileReader();
+
+            reader.readAsDataURL(selectedImg);
+
+            reader.addEventListener("load", function () {
+              imageContainer.innerHTML = "";
+              let image = document.createElement("img");
+              image.id = "imgSelected";
+              image.src = reader.result;
+              imageContainer.style.justifyContent = "center";
+              imageContainer.style.padding = "0";
+              imageContainer.appendChild(image);
+            })
+        
+        };
+  input.click();
+   
 });
+
+
+/* Quand l'utilisateur veut retourner dans la gallerie modale
+   clique sur la flèche */
+closeFormModal.addEventListener("click", function () {
+  closeFormModal.style.display = "none";
+  galleryContainer.style.display = "flex";
+  ajoutPhotoForm.style.display = "none";
+});
+
+
 
 /**Séquence de code */
 getWorks();
@@ -202,6 +243,8 @@ if (userToken !== null) {
   editWorks.addEventListener("click", function ()  {
   modal_container.classList.add("show");
   displayModalGallery();
-
+  closeFormModal.style.display = "none";
+  galleryContainer.style.display = "flex";
+  ajoutPhotoForm.style.display = "none";
 });
 }

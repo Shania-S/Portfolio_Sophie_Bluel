@@ -14,6 +14,7 @@ const addImageBtn = document.getElementById("addImageBtn");
 const ajoutPhotoForm = document.querySelector(".ajoutPhotoForm");
 const ajoutPhotoBtn = document.getElementById("ajoutPhotoBtn");
 const imageContainer = document.querySelector(".imageContainer");
+const categoryOption = document.getElementById("categorie");
 
 /**Déclaration des fonctions */
 /* Cette fonction récupère la liste des travaux via la requête fetch */
@@ -26,13 +27,21 @@ const getWorks = async () => {
 
 /* Cette fonction récupère la liste des catégories dans la liste des travaux
    On aurait aussi pu faire une requête*/
-   function getCategories() {
-    let categories = allWorks.map((work) => work.category); // list all categories with duplicates
-    uniqueCategories = new Map(
-      categories.map((cat) => [cat["id"], cat])
-    ).values(); // remove duplicates by id
-  
-    return uniqueCategories;
+   async function getCategories() {
+    try {
+      const response = await fetch('http://localhost:5678/api/categories'); // list all categories with duplicates
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const categories = await response.json();
+      return categories;
+    }
+
+    catch (error) {
+      console.error('La requête retourne une erreur', error);
+    }
+
+    
   }
 
 /* Cette fonction affiche les travaux en fonction des categories */
@@ -53,8 +62,9 @@ function displayWorks(filteredWork) {
 }
 
 /* Cette fonction crée les boutons de catégories et les affiche */
-function displayFilterButtons(allWorks) {
-  let categories = getCategories();
+async function displayFilterButtons(allWorks) {
+  let categories = await getCategories();
+  console.log(categories);
   for (let item of categories) {
     let categoryBtn = document.createElement("button");
     categoryBtn.textContent = item.name;
@@ -117,10 +127,11 @@ function displayModalGallery () {
     figure.appendChild(image);
     figure.appendChild(removeWorkBtn);
    
+    removeWorkBtn.addEventListener("click", function () {
 
-    removeWorkBtn.addEventListener("click", function ()  {
      console.log(`clickk ${image.id}`);
      deleteWork(image.id);
+
     });
   }
 }
@@ -147,6 +158,12 @@ function displayModalGallery () {
         'Content-Type':'application/json',
         'Authorization': `Bearer ${userToken}`
       },
+    }).then( ()=> {
+      allWorks = allWorks.filter((element) => {
+        return parseInt(element.id) !== parseInt(workId)
+      })
+      displayWorks(allWorks);
+      displayModalGallery();    
     })
   }
 
@@ -180,14 +197,20 @@ addImageBtn.addEventListener("click", function () {
   galleryContainer.style.display  = "none";
   closeFormModal.style.display = "block";
   ajoutPhotoForm.style.display = "flex";
-
+  
+  let categories = getCategories();
+  for (let category of categories) {
+    const option = document.createElement("option");
+    option.value = category.id;
+    option.text = category.name;
+    categoryOption.add(option);
+  }
   // add fetch request
 });
 
 /* Quand l'utilisateur clique sur le bouton ajouter photo
    dans le formulaire */
 ajoutPhotoBtn.addEventListener("click", function () {
-  
   let input = document.createElement('input');
   input.type = 'file';
   input.onchange = _ => {

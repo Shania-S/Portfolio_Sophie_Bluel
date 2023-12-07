@@ -60,21 +60,19 @@
 				<h2>Ajout photo</h2>
                 <div class="formFields">
                   <div class="imageContainer">
-                    <i class="fa-regular fa-image" style="color: #CBD6DC;font-size: 3rem;"></i>
-					<button id="ajoutPhotoBtn"> + Ajouter photo</button>
-					<span>jpg, png : 4mo max</span>
+
+				  </div>
+				  <span id="errorMessageImg"></span>
+				  <div class="formGroup">
+					<label for="workTitle">Titre</label>
+					<input type="text" id="workTitle" name="workTitle" required/>
 				  </div>
 				  <div class="formGroup">
-					<label for="titre">Titre</label>
-					<input type="text" id="titre" name="titre" required/>
-				  </div>
-				  <div class="formGroup">
-					<label for="categorie">Catégorie</label>
-					<select id="categorie">
+					<label for="categoryList">Catégorie</label>
+					<select id="categoryList">
 						<option value="">Veuillez choisir une catégorie</option>
 					</select>
 				  </div>
-				 
 				</div>
 				<button id="validerPhotoForm" disabled>Valider</button>
 			</form>	

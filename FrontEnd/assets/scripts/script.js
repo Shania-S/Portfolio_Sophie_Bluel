@@ -179,14 +179,13 @@ function updateFormValidity() {
   }
 }
 
+/* Envoi du nouveau work */
 function sendForm(image, titleW, categoryValue) {
-  // Create FormData object
+
   const formData = new FormData();
 
-  // Append file to FormData
   formData.append("image", image);
 
-  // Append other form data
   formData.append("title", titleW);
   formData.append("category", categoryValue);
 
@@ -308,7 +307,7 @@ addImageBtn.addEventListener("click", async function () {
     option.text = category.name;
     categoryList.add(option);
   }
-  // add fetch request
+
 });
 
 /* Quand l'utilisateur clique sur le bouton ajouter photo

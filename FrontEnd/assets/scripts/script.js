@@ -34,8 +34,7 @@ const getWorks = async () => {
   displayWorks(allWorks);
 };
 
-/* Cette fonction récupère la liste des catégories dans la liste des travaux
-   On aurait aussi pu faire une requête*/
+/* Cette fonction récupère la liste des catégories dans la liste des travaux */
 async function getCategories() {
   try {
     const response = await fetch("http://localhost:5678/api/categories"); // list all categories with duplicates

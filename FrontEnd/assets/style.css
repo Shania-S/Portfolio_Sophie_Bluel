@@ -386,6 +386,11 @@ a {
   display: flex;
 }
 
+#errorMessageImg {
+  display: none;
+  color:red;
+}
+
 #addImageBtn
 {
   margin-top: 25px;
@@ -405,7 +410,7 @@ a {
   margin-top: 25px;
   box-sizing: border-box;
   padding: 5px 35px;
-  background-color: #A7A7A7;
+  background-color: #1d6154;
   color: white;
   border: none;
   cursor: pointer;
@@ -413,6 +418,12 @@ a {
   width: 237px;
   height: 36px;
   border-radius: 60px;
+}
+
+#validerPhotoForm[disabled] {
+cursor: not-allowed;
+pointer-events: none;
+background-color: #A7A7A7;
 }
 
 .formFields {
@@ -484,6 +495,11 @@ a {
   cursor: pointer;
   width: 173px;
   height: 36px;
+}
+
+.imageContainer i {
+ color: #CBD6DC;
+ font-size: 3rem;
 }
 
 /*Styling modal */

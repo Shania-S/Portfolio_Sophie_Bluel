@@ -23,7 +23,7 @@ let selectedImg;
 let titleW;
 let categoryValue;
 let categoryText;
-let validerPhotoForm = document.getElementById('validerPhotoForm')
+let validerPhotoForm = document.getElementById("validerPhotoForm");
 
 /**DECLARATION DES FONCTIONS */
 /* Cette fonction récupère la liste des travaux via la requête fetch */
@@ -172,48 +172,46 @@ function deleteWork(workId) {
 /* Cette fonction valide le formulaire et appelle 
    la fonction qui envoie le travail saisi */
 function updateFormValidity() {
-   if (titleW && categoryValue ) {
-
-validerPhotoForm.disabled = false;
-
-   }
-   else {
+  if (titleW && categoryValue) {
+    validerPhotoForm.disabled = false;
+  } else {
     validerPhotoForm.disabled = true;
-   }
+  }
 }
 
-function sendForm (image, titleW, categoryValue) {
+function sendForm(image, titleW, categoryValue) {
   // Create FormData object
-const formData = new FormData();
+  const formData = new FormData();
 
-// Append file to FormData
-formData.append('image', image);
+  // Append file to FormData
+  formData.append("image", image);
 
-// Append other form data
-formData.append('title', titleW);
-formData.append('category', categoryValue);
+  // Append other form data
+  formData.append("title", titleW);
+  formData.append("category", categoryValue);
 
   console.log("okkkkk");
-  fetch('http://localhost:5678/api/works', {
+  fetch("http://localhost:5678/api/works", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${userToken}`
+      Authorization: `Bearer ${userToken}`,
     },
-    body:formData,
-    }).then(response => response.json()).then(data => {
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
       allWorks.push(data);
       displayWorks(allWorks);
       modal_container.style.display = "none";
-      
-    }).catch(error => {
-console.error('Une erreur est survenue:', error)
+    })
+    .catch((error) => {
+      console.error("Une erreur est survenue:", error);
     });
-  }
-
+}
 
 /* Cette fonction crée/affiche le bouton pour 
    preview une image */
-function displayAjoutPhotoBtn () {
+function displayAjoutPhotoBtn() {
   imageContainer.innerHTML = "";
   const iconElement = document.createElement("i");
   iconElement.className = "fa-regular fa-image";
@@ -230,38 +228,39 @@ function displayAjoutPhotoBtn () {
 
 /* Cette fonction vérifie le type et la taille de l'image */
 function checkImageProperty(imageD) {
-    let maxSizeBytes = 4 * 1024 * 1024;
-    
-    if (imageD.type !== "image/jpg" && imageD.type !== "image/png") {
-     
-      errorMessage.innerText="L'image n'est pas au bon format";
-      errorMessage.style.display = "block";
-      imageContainer.style.justifyContent = "space-evenly";
-      imageContainer.style.padding = "10px 0";
-      displayAjoutPhotoBtn();
-      return "not ok";
-    }
+  let maxSizeBytes = 4 * 1024 * 1024;
 
-    if (imageD.size > maxSizeBytes) {
+  if (imageD.type !== "image/jpg" && imageD.type !== "image/png") {
+    errorMessage.innerText = "L'image n'est pas au bon format";
+    errorMessage.style.display = "block";
+    imageContainer.style.justifyContent = "space-evenly";
+    imageContainer.style.padding = "10px 0";
+    displayAjoutPhotoBtn();
+    return "not ok";
+  }
 
-      errorMessage.innerText="La taille a dépassé 4Mo";
-      errorMessage.style.display = "block";
-      imageContainer.style.justifyContent = "space-evenly";
-      imageContainer.style.padding = "10px 0";
-      displayAjoutPhotoBtn()
-      return "not ok";
-    }
+  if (imageD.size > maxSizeBytes) {
+    errorMessage.innerText = "La taille a dépassé 4Mo";
+    errorMessage.style.display = "block";
+    imageContainer.style.justifyContent = "space-evenly";
+    imageContainer.style.padding = "10px 0";
+    displayAjoutPhotoBtn();
+    return "not ok";
+  }
 
-    if ((imageD.type !== "image/jpg" && imageD.type !== "image/png") && imageD.size > maxSizeBytes) {
-      errorMessage.innerText="Le format et la taille ne sont pas corrects";
-      errorMessage.style.display = "block";
-      imageContainer.style.justifyContent = "space-evenly";
-      imageContainer.style.padding = "10px 0";
-      displayAjoutPhotoBtn()
-      return "not ok";
-    }
-    return("ok");
-    
+  if (
+    imageD.type !== "image/jpg" &&
+    imageD.type !== "image/png" &&
+    imageD.size > maxSizeBytes
+  ) {
+    errorMessage.innerText = "Le format et la taille ne sont pas corrects";
+    errorMessage.style.display = "block";
+    imageContainer.style.justifyContent = "space-evenly";
+    imageContainer.style.padding = "10px 0";
+    displayAjoutPhotoBtn();
+    return "not ok";
+  }
+  return "ok";
 }
 
 /**DECLARATION DES EVENTS LISTENERS */
@@ -293,9 +292,9 @@ addImageBtn.addEventListener("click", async function () {
   galleryContainer.style.display = "none";
   closeFormModal.style.display = "block";
   ajoutPhotoForm.style.display = "flex";
-  
+
   displayAjoutPhotoBtn();
- 
+
   console.log("hhhh");
   workTitle.value = "";
   for (var i = categoryList.options.length - 1; i > 0; i--) {
@@ -314,35 +313,35 @@ addImageBtn.addEventListener("click", async function () {
 
 /* Quand l'utilisateur clique sur le bouton ajouter photo
    dans le formulaire */
-  imageContainer.addEventListener("click", function (event) {
-    if (event.target.id === "ajoutPhotoBtn" ) {
-      event.preventDefault();
-      errorMessage.style.display = "none";
-      inputFile = document.createElement("input");
-      inputFile.type = "file";
-      inputFile.onchange = (_) => {
-        let files = Array.from(inputFile.files);
-        console.log(files[0]);
-        selectedImg = files[0];
-      
-        if (checkImageProperty(selectedImg) === "ok") {  
-          const reader = new FileReader();
-          reader.readAsDataURL(selectedImg);
-          reader.addEventListener("load", function () {
-            imageContainer.innerHTML = "";
-            let image = document.createElement("img");
-            image.id = "imgSelected";
-            image.src = reader.result;
-            imageContainer.style.justifyContent = "center";
-            imageContainer.style.padding = "0";
-            imageContainer.appendChild(image);
-            updateFormValidity();
-          });}
-      
-      };
-      inputFile.click();
-    }
-  })
+imageContainer.addEventListener("click", function (event) {
+  if (event.target.id === "ajoutPhotoBtn") {
+    event.preventDefault();
+    errorMessage.style.display = "none";
+    inputFile = document.createElement("input");
+    inputFile.type = "file";
+    inputFile.onchange = (_) => {
+      let files = Array.from(inputFile.files);
+      console.log(files[0]);
+      selectedImg = files[0];
+
+      if (checkImageProperty(selectedImg) === "ok") {
+        const reader = new FileReader();
+        reader.readAsDataURL(selectedImg);
+        reader.addEventListener("load", function () {
+          imageContainer.innerHTML = "";
+          let image = document.createElement("img");
+          image.id = "imgSelected";
+          image.src = reader.result;
+          imageContainer.style.justifyContent = "center";
+          imageContainer.style.padding = "0";
+          imageContainer.appendChild(image);
+          updateFormValidity();
+        });
+      }
+    };
+    inputFile.click();
+  }
+});
 
 /* Récupère ce que saisit l'utilisateur */
 workTitle.addEventListener("input", () => {
@@ -357,12 +356,12 @@ categoryList.addEventListener("change", () => {
   updateFormValidity();
 });
 
+/* Quand l'utilisateur clique sur le bouton valider
+   envoi du formulaire*/
 validerPhotoForm.addEventListener("click", (event) => {
   event.preventDefault();
-  sendForm(selectedImg,titleW,categoryValue);
- 
-  console.log("okkkkk2222");
-})
+  sendForm(selectedImg, titleW, categoryValue);
+});
 
 /* Quand l'utilisateur veut retourner dans la gallerie modale
    clique sur la flèche */

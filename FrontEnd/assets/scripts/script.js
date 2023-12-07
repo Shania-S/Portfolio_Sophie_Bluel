@@ -23,8 +23,9 @@ let selectedImg;
 let titleW;
 let categoryValue;
 let categoryText;
+let validerPhotoForm = document.getElementById('validerPhotoForm')
 
-/**Déclaration des fonctions */
+/**DECLARATION DES FONCTIONS */
 /* Cette fonction récupère la liste des travaux via la requête fetch */
 const getWorks = async () => {
   const works = await fetch("http://localhost:5678/api/works");
@@ -152,7 +153,7 @@ function filterWorks(catId) {
   }
 }
 
-/* Cette fonction supprime le travail s */
+/* Cette fonction supprime le travail*/
 function deleteWork(workId) {
   fetch(`http://localhost:5678/api/works/${workId}`, {
     method: "DELETE",
@@ -169,22 +170,50 @@ function deleteWork(workId) {
   });
 }
 
-
-
+/* Cette fonction valide le formulaire et appelle 
+   la fonction qui envoie le travail saisi */
 function validateForm() {
    if (titleW && categoryValue ) {
-   
-const validerPhotoForm = document.getElementById('validerPhotoForm');
 
 validerPhotoForm.disabled = false;
+
    }
    else {
     validerPhotoForm.disabled = true;
    }
-
 }
 
+function sendForm (image, titleW, categoryValue) {
+  // Create FormData object
+const formData = new FormData();
 
+// Append file to FormData
+formData.append('image', image);
+
+// Append other form data
+formData.append('title', titleW);
+formData.append('category', categoryValue);
+
+  console.log("okkkkk");
+  fetch('http://localhost:5678/api/works', {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${userToken}`
+    },
+    body:formData,
+    }).then(response => response.json()).then(data => {
+      allWorks.push(data);
+      displayWorks(allWorks);
+      modal_container.style.display = "none";
+      
+    }).catch(error => {
+console.error('Une erreur est survenue:', error)
+    });
+  }
+
+
+/* Cette fonction crée/affiche le bouton pour 
+   preview une image */
 function displayAjoutPhotoBtn () {
   imageContainer.innerHTML = "";
   const iconElement = document.createElement("i");
@@ -200,6 +229,7 @@ function displayAjoutPhotoBtn () {
   imageContainer.appendChild(imgType);
 }
 
+/* Cette fonction vérifie le type et la taille de l'image */
 function checkImageProperty(imageD) {
     let maxSizeBytes = 4 * 1024 * 1024;
     
@@ -235,7 +265,7 @@ function checkImageProperty(imageD) {
     
 }
 
-/**Déclaration des event listeners */
+/**DECLARATION DES EVENTS LISTENERS */
 /* Quand l'utilisateur filtre les travaux */
 sectionFilter.addEventListener("click", function (event) {
   if (event.target.classList.contains("filterCategory")) {
@@ -326,6 +356,13 @@ categoryList.addEventListener("change", () => {
   categoryText = categoryList.options[categoryList.selectedIndex].text;
   validateForm();
 });
+
+validerPhotoForm.addEventListener("click", (event) => {
+  event.preventDefault();
+  sendForm(selectedImg,titleW,categoryValue);
+ 
+  console.log("okkkkk2222");
+})
 
 /* Quand l'utilisateur veut retourner dans la gallerie modale
    clique sur la flèche */

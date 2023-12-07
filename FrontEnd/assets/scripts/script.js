@@ -18,6 +18,12 @@ let inputFile;
 let workTitle = document.getElementById("workTitle");
 let errorMessage = document.getElementById("errorMessageImg");
 
+/** Form variables */
+let selectedImg;
+let titleW;
+let categoryValue;
+let categoryText;
+
 /**Déclaration des fonctions */
 /* Cette fonction récupère la liste des travaux via la requête fetch */
 const getWorks = async () => {
@@ -163,9 +169,20 @@ function deleteWork(workId) {
   });
 }
 
-function displayImage(imageD) {}
 
-function validateForm(imageD, workTitle, selectedCat) {}
+
+function validateForm() {
+   if (titleW && categoryValue ) {
+   
+const validerPhotoForm = document.getElementById('validerPhotoForm');
+
+validerPhotoForm.disabled = false;
+   }
+   else {
+    validerPhotoForm.disabled = true;
+   }
+
+}
 
 
 function displayAjoutPhotoBtn () {
@@ -277,7 +294,7 @@ addImageBtn.addEventListener("click", async function () {
       inputFile.onchange = (_) => {
         let files = Array.from(inputFile.files);
         console.log(files[0]);
-        const selectedImg = files[0];
+        selectedImg = files[0];
       
         if (checkImageProperty(selectedImg) === "ok") {  
           const reader = new FileReader();
@@ -290,7 +307,7 @@ addImageBtn.addEventListener("click", async function () {
             imageContainer.style.justifyContent = "center";
             imageContainer.style.padding = "0";
             imageContainer.appendChild(image);
-            
+            validateForm();
           });}
       
       };
@@ -300,15 +317,14 @@ addImageBtn.addEventListener("click", async function () {
 
 
 workTitle.addEventListener("input", () => {
-  let title = workTitle.value;
-  console.log(title);
+  titleW = workTitle.value;
+  validateForm();
 });
 
 categoryList.addEventListener("change", () => {
-  let value = categoryList.options[categoryList.selectedIndex].value;
-  let text = categoryList.options[categoryList.selectedIndex].text;
-
-  console.log(`${value} et ${text}`);
+  categoryValue = categoryList.options[categoryList.selectedIndex].value;
+  categoryText = categoryList.options[categoryList.selectedIndex].text;
+  validateForm();
 });
 
 /* Quand l'utilisateur veut retourner dans la gallerie modale

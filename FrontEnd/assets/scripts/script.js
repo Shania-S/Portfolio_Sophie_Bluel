@@ -171,7 +171,7 @@ function deleteWork(workId) {
 
 /* Cette fonction valide le formulaire et appelle 
    la fonction qui envoie le travail saisi */
-function validateForm() {
+function updateFormValidity() {
    if (titleW && categoryValue ) {
 
 validerPhotoForm.disabled = false;
@@ -336,7 +336,7 @@ addImageBtn.addEventListener("click", async function () {
             imageContainer.style.justifyContent = "center";
             imageContainer.style.padding = "0";
             imageContainer.appendChild(image);
-            validateForm();
+            updateFormValidity();
           });}
       
       };
@@ -344,16 +344,17 @@ addImageBtn.addEventListener("click", async function () {
     }
   })
 
-
+/* Récupère ce que saisit l'utilisateur */
 workTitle.addEventListener("input", () => {
   titleW = workTitle.value;
-  validateForm();
+  updateFormValidity();
 });
 
+/* Récupère l'option sélectionée */
 categoryList.addEventListener("change", () => {
   categoryValue = categoryList.options[categoryList.selectedIndex].value;
   categoryText = categoryList.options[categoryList.selectedIndex].text;
-  validateForm();
+  updateFormValidity();
 });
 
 validerPhotoForm.addEventListener("click", (event) => {

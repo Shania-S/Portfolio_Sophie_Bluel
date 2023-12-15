@@ -10,7 +10,9 @@ const addNewWorkForm = document.querySelector(".addNewWorkForm");
 const imageContainer = document.querySelector(".imageContainer");
 const categoryList = document.getElementById("categoryList");
 let workTitle = document.getElementById("workTitle");
-let errorMessage = document.getElementById("errorMessageImg");
+const errorMessageImg = document.getElementById("errorMessageImg");
+const errorMessageTitle = document.getElementById("errorMessageTitle");
+const errorMessageCat = document.getElementById("errorMessageCat");
 
 /** Form variables */
 let selectedImg;

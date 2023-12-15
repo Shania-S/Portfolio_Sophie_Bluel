@@ -14,7 +14,7 @@ if (userToken !== null) {
   let editWorks = document.querySelector(".editWorks");
 
   /* Quand l'utilisateur clique sur le bouton modifier */
-  editWorks.addEventListener("click", function () {
+  editWorks.addEventListener("click", function (event) {
     modal_container.classList.add("show");
     displayModalGallery();
     closeFormModal.style.display = "none";

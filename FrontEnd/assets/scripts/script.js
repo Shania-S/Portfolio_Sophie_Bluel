@@ -168,8 +168,8 @@ function checkImageProperty(imageD) {
   let maxSizeBytes = 4 * 1024 * 1024;
 
   if (imageD.type !== "image/jpg" && imageD.type !== "image/png") {
-    errorMessage.innerText = "L'image n'est pas au bon format";
-    errorMessage.style.display = "block";
+    errorMessageImg.innerText = "L'image n'est pas au bon format";
+    errorMessageImg.style.display = "block";
     imageContainer.style.justifyContent = "space-evenly";
     imageContainer.style.padding = "10px 0";
     selectedImg = "";
@@ -178,8 +178,8 @@ function checkImageProperty(imageD) {
   }
 
   if (imageD.size > maxSizeBytes) {
-    errorMessage.innerText = "La taille a dépassé 4Mo";
-    errorMessage.style.display = "block";
+    errorMessageImg.innerText = "La taille a dépassé 4Mo";
+    errorMessageImg.style.display = "block";
     imageContainer.style.justifyContent = "space-evenly";
     imageContainer.style.padding = "10px 0";
     selectedImg = "";
@@ -192,8 +192,8 @@ function checkImageProperty(imageD) {
     imageD.type !== "image/png" &&
     imageD.size > maxSizeBytes
   ) {
-    errorMessage.innerText = "Le format et la taille ne sont pas corrects";
-    errorMessage.style.display = "block";
+    errorMessageImg.innerText = "Le format et la taille ne sont pas corrects";
+    errorMessageImg.style.display = "block";
     imageContainer.style.justifyContent = "space-evenly";
     imageContainer.style.padding = "10px 0";
     selectedImg = "";
@@ -203,8 +203,7 @@ function checkImageProperty(imageD) {
   return "ok";
 }
 
-/* Cette fonction valide le formulaire et appelle 
-   la fonction qui envoie le travail saisi */
+/* Cette fonction change la couleur du bouton du formulaire */
 function updateFormValidity() {
   if (titleW && categoryValue && selectedImg) {
     validerPhotoForm.disabled = false;
@@ -261,6 +260,9 @@ logElement.addEventListener("click", function (event) {
 document.getElementById("closeModal").addEventListener("click", function () {
   modal_container.classList.remove("show");
 });
+document.getElementById("modal_container").addEventListener("click", function (event) {
+  if (!event.target.closest('.modal')) {  modal_container.classList.remove("show");}
+});
 
 /* Quand l'utilisateur clique sur le bouton ajouter photo
    Affiche le formulaire */
@@ -270,7 +272,9 @@ document.getElementById("closeModal").addEventListener("click", function () {
   addNewWorkForm.style.display = "flex";
 
   displayAjoutPhotoBtn();
-  errorMessage.style.display = "none";
+  errorMessageImg.style.display = "none";
+  errorMessageCat.style.display = "none";
+  errorMessageTitle.style.display = "none";
   workTitle.value = "";
   selectedImg = "";
   categoryValue = "";
@@ -292,7 +296,7 @@ document.getElementById("closeModal").addEventListener("click", function () {
 imageContainer.addEventListener("click", function (event) {
   if (event.target.id === "ajoutPhotoBtn") {
     event.preventDefault();
-    errorMessage.style.display = "none";
+    errorMessageImg.style.display = "none";
     let inputFile = document.createElement("input");
     inputFile.type = "file";
     inputFile.onchange = (_) => {
@@ -321,15 +325,32 @@ imageContainer.addEventListener("click", function (event) {
 
 /* Récupère ce que saisit l'utilisateur */
 workTitle.addEventListener("input", () => {
+  errorMessageTitle.style.display = "none";
   titleW = workTitle.value;
   updateFormValidity();
 });
 
+/* Quand l'utilisateur clique en dehors de l'input titre*/
+workTitle.addEventListener("focusout", () => {
+  if (!titleW) {
+    errorMessageTitle.style.display = "block";
+    errorMessageTitle.innerText = "Le titre est requis"};
+});
+
 /* Récupère l'option sélectionée */
 categoryList.addEventListener("change", () => {
+  errorMessageCat.style.display = "none";
   categoryValue = categoryList.options[categoryList.selectedIndex].value;
   categoryText = categoryList.options[categoryList.selectedIndex].text;
   updateFormValidity();
+});
+
+/* Quand l'utilisateur clique en dehors de l'input catégorie*/
+categoryList.addEventListener("focusout", () => {
+  if (!categoryValue) {
+    errorMessageCat.style.display = "block";
+    errorMessageCat.innerText = "La catégorie est requise";
+  }
 });
 
 /* Quand l'utilisateur clique sur le bouton valider

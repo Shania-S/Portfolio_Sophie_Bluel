@@ -474,6 +474,7 @@ background-color: #A7A7A7;
   box-sizing: border-box;
   font-family: Work Sans;
   margin-top:10px;
+  color:#444444;
 }
 
 .formFields > .formGroup label {

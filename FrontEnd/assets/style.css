@@ -325,7 +325,7 @@ a {
 }
 
 .galleryContainer,
-.ajoutPhotoForm {
+.addNewWorkForm {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -334,7 +334,7 @@ a {
 }
 
 .galleryContainer h2,
-.ajoutPhotoForm h2 {
+.addNewWorkForm h2 {
   font-family: Work Sans;
   font-size: 26px;
   font-weight: 400;

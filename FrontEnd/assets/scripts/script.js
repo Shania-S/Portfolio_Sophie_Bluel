@@ -1,6 +1,6 @@
 /**DECLARATION DES FONCTIONS */
 /* Cette fonction récupère la liste des travaux via la requête fetch */
-  export const getWorks = async () => { 
+export const getWorks = async () => {
   const works = await fetch("http://localhost:5678/api/works");
   allWorks = await works.json();
   displayFilterButtons();
@@ -8,7 +8,7 @@
 };
 
 /* Cette fonction récupère la liste des catégories dans la liste des travaux */
- async function getCategories() {
+async function getCategories() {
   try {
     const response = await fetch("http://localhost:5678/api/categories");
     if (!response.ok) {
@@ -37,7 +37,7 @@ function filterWorks(catId) {
 }
 
 /* Cette fonction affiche les travaux en fonction de la catégorie sélectionnée */
-  function displayWorks(filteredWork) {
+function displayWorks(filteredWork) {
   document.querySelector(".gallery").innerHTML = "";
   let gallery = document.querySelector(".gallery");
   for (const index in filteredWork) {
@@ -68,7 +68,7 @@ export function displayBanner() {
 }
 
 /*Cette fonction affiche le bouton modifier*/
- export function displayEditButton() {
+export function displayEditButton() {
   const elemTitle = document.createElement("div");
   elemTitle.className = "projectTitle";
   const portSection = document.getElementById("portfolio");
@@ -86,7 +86,7 @@ export function displayBanner() {
 }
 
 /* Cette fonction crée les boutons de catégories et les affiche */
- async function displayFilterButtons() {
+async function displayFilterButtons() {
   let categories = await getCategories();
   console.log(categories);
   for (const item of categories) {
@@ -128,7 +128,7 @@ export function displayModalGallery() {
 
 /* Cette fonction crée/affiche le bouton pour 
  preview une image */
- function displayAjoutPhotoBtn() {
+function displayAjoutPhotoBtn() {
   imageContainer.innerHTML = "";
   const iconElement = document.createElement("i");
   iconElement.className = "fa-regular fa-image";
@@ -143,7 +143,7 @@ export function displayModalGallery() {
   imageContainer.appendChild(imgType);
   imageContainer.style.justifyContent = "space-evenly";
   imageContainer.style.padding = "10px 0";
-}  
+}
 
 /* Cette fonction supprime le travail*/
 function deleteWork(workId) {
@@ -161,7 +161,6 @@ function deleteWork(workId) {
     displayModalGallery();
   });
 }
-
 
 /* Cette fonction vérifie le type et la taille de l'image */
 function checkImageProperty(imageD) {
@@ -237,7 +236,6 @@ function sendForm(image, titleW, categoryValue) {
     });
 }
 
-
 /**DECLARATION DES EVENT LISTENERS */
 /* Quand l'utilisateur filtre les travaux */
 sectionFilter.addEventListener("click", function (event) {
@@ -261,35 +259,37 @@ document.getElementById("closeModal").addEventListener("click", function () {
   modal_container.classList.remove("show");
 });
 document.getElementById("modal_container").addEventListener("click", function (event) {
-  if (!event.target.closest('.modal')) {  modal_container.classList.remove("show");}
-});
+    if (!event.target.closest(".modal")) {
+      modal_container.classList.remove("show");
+    }
+  });
 
 /* Quand l'utilisateur clique sur le bouton ajouter photo
    Affiche le formulaire */
-  document.getElementById("addImageBtn").addEventListener("click", async function () {
-  galleryContainer.style.display = "none";
-  closeFormModal.style.display = "block";
-  addNewWorkForm.style.display = "flex";
+document.getElementById("addImageBtn").addEventListener("click", async function () {
+    galleryContainer.style.display = "none";
+    closeFormModal.style.display = "block";
+    addNewWorkForm.style.display = "flex";
 
-  displayAjoutPhotoBtn();
-  errorMessageImg.style.display = "none";
-  errorMessageCat.style.display = "none";
-  errorMessageTitle.style.display = "none";
-  workTitle.value = "";
-  selectedImg = "";
-  categoryValue = "";
-  for (var i = categoryList.options.length - 1; i > 0; i--) {
-    categoryList.remove(i);
-  }
-  let categories = await getCategories();
-  for (const category of categories) {
-    const option = document.createElement("option");
-    option.value = category.id;
-    option.text = category.name;
-    categoryList.add(option);
-  }
-  validerPhotoForm.disabled = true;
-});
+    displayAjoutPhotoBtn();
+    errorMessageImg.style.display = "none";
+    errorMessageCat.style.display = "none";
+    errorMessageTitle.style.display = "none";
+    workTitle.value = "";
+    selectedImg = "";
+    categoryValue = "";
+    for (var i = categoryList.options.length - 1; i > 0; i--) {
+      categoryList.remove(i);
+    }
+    let categories = await getCategories();
+    for (const category of categories) {
+      const option = document.createElement("option");
+      option.value = category.id;
+      option.text = category.name;
+      categoryList.add(option);
+    }
+    validerPhotoForm.disabled = true;
+  });
 
 /* Quand l'utilisateur clique sur le bouton ajouter photo
    dans le formulaire */
@@ -297,19 +297,22 @@ imageContainer.addEventListener("click", function (event) {
   if (event.target.id === "ajoutPhotoBtn") {
     event.preventDefault();
     errorMessageImg.style.display = "none";
-    let inputFile = document.createElement("input");
+    const inputFile = document.createElement("input");
     inputFile.type = "file";
-    inputFile.onchange = (_) => {
-      let files = Array.from(inputFile.files);
+
+    inputFile.click();
+
+    inputFile.onchange = () => {
+
+      const files = Array.from(inputFile.files);
       console.log(files[0]);
       selectedImg = files[0];
-
       if (checkImageProperty(selectedImg) === "ok") {
         const reader = new FileReader();
         reader.readAsDataURL(selectedImg);
         reader.addEventListener("load", function () {
           imageContainer.innerHTML = "";
-          let image = document.createElement("img");
+          const image = document.createElement("img");
           image.id = "imgSelected";
           image.src = reader.result;
           imageContainer.style.justifyContent = "center";
@@ -319,9 +322,15 @@ imageContainer.addEventListener("click", function (event) {
         });
       }
     };
-    inputFile.click();
+
+    // Quand l'utilisateur clique sur annuler/cancel
+    inputFile.addEventListener("cancel", (event) => {
+      errorMessageImg.innerText = "Veuillez sélectionner une image";
+      errorMessageImg.style.display = "block";
+    });
   }
 });
+
 
 /* Récupère ce que saisit l'utilisateur */
 workTitle.addEventListener("input", () => {
@@ -334,7 +343,8 @@ workTitle.addEventListener("input", () => {
 workTitle.addEventListener("focusout", () => {
   if (!titleW) {
     errorMessageTitle.style.display = "block";
-    errorMessageTitle.innerText = "Le titre est requis"};
+    errorMessageTitle.innerText = "Le titre est requis";
+  }
 });
 
 /* Récupère l'option sélectionée */
@@ -367,5 +377,3 @@ closeFormModal.addEventListener("click", function () {
   galleryContainer.style.display = "flex";
   addNewWorkForm.style.display = "none";
 });
-
-

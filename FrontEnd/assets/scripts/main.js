@@ -1,4 +1,5 @@
 import { getWorks, displayBanner,displayEditButton,displayModalGallery } from "./script.js";
+
 /**Séquence de code */
 getWorks();
 

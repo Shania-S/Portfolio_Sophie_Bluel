@@ -17,7 +17,8 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="./assets/scripts/variables.js" defer></script>
-	<script type="module" src="./assets/scripts/main.js" defer></script>
+	<script type="module" src="./assets/scripts/main.js" ></script>
+
 </head>
 <body>
 <header>
@@ -36,6 +37,7 @@
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
 		</figure>
+
 		<article>
 			<h2>Designer d'espace</h2>
 			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
@@ -66,13 +68,13 @@
 				  <span id="errorMessageImg"></span>
 				  <div class="formGroup">
 					<label for="workTitle">Titre</label>
-					<input type="text" id="workTitle" name="workTitle" required/>
+					<input type="text" id="workTitle" name="workTitle" autocomplete="given-name" required/>
 					<span id="errorMessageTitle"></span>
 				  </div>
 				 
 				  <div class="formGroup">
 					<label for="categoryList">Catégorie</label>
-					<select id="categoryList">
+					<select id="categoryList" autocomplete="given-option">
 						<option value=""></option>
 					</select>
 					<span id="errorMessageCat"></span>

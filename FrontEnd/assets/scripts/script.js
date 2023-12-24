@@ -8,7 +8,7 @@ export const getWorks = async () => {
 };
 
 /* Cette fonction récupère la liste des catégories dans la liste des travaux */
-async function getCategories() {
+async function getCategories(event) {
   try {
     const response = await fetch("http://localhost:5678/api/categories");
     if (!response.ok) {
@@ -21,10 +21,23 @@ async function getCategories() {
   }
 }
 
+/* Cette fonction crée les boutons de catégories et les affiche */
+async function displayFilterButtons() {
+  let categories = await getCategories();
+  console.log(categories);
+  for (const item of categories) {
+    let categoryBtn = document.createElement("button");
+    categoryBtn.textContent = item.name;
+    categoryBtn.className = "filterCategory";
+    categoryBtn.id = item.id;
+    sectionFilter.appendChild(categoryBtn);
+  }
+}
+
 /* Cette fonction filtre les travaux en fonction de la catégorie cliquée
    et les affiche en appelant la fonction displayWorks()*/
 function filterWorks(catId) {
-  console.log(catId);
+
   let categoryId = catId;
   if (!isNaN(parseInt(categoryId))) {
     let works = allWorks.filter(
@@ -85,19 +98,6 @@ export function displayEditButton() {
   portSection.insertBefore(elemTitle, portSection.firstChild);
 }
 
-/* Cette fonction crée les boutons de catégories et les affiche */
-async function displayFilterButtons() {
-  let categories = await getCategories();
-  console.log(categories);
-  for (const item of categories) {
-    let categoryBtn = document.createElement("button");
-    categoryBtn.textContent = item.name;
-    categoryBtn.className = "filterCategory";
-    categoryBtn.id = item.id;
-    sectionFilter.appendChild(categoryBtn);
-  }
-}
-
 /* Cette fonction crée et affiche les travaux dans la modale */
 export function displayModalGallery() {
   let galleryModal = document.querySelector(".galleryModal");
@@ -111,6 +111,7 @@ export function displayModalGallery() {
     image.alt = allWorks[work].title;
     let removeWorkBtn = document.createElement("button");
     removeWorkBtn.className = "removeWork";
+    removeWorkBtn.type = "button";
     let trashCanIcon = document.createElement("i");
     trashCanIcon.className = "fa-solid fa-trash-can";
 
@@ -120,10 +121,31 @@ export function displayModalGallery() {
     figure.appendChild(image);
     figure.appendChild(removeWorkBtn);
 
-    removeWorkBtn.addEventListener("click", function () {
-      deleteWork(image.id);
-    });
+      removeWorkBtn.addEventListener("click", function () {
+   
+        console.log(image.id);
+        deleteWork(image.id);
+
+      });
+
   }
+}
+
+/* Cette fonction supprime le travail*/
+function deleteWork(workId) {
+  fetch(`http://localhost:5678/api/works/${workId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`,
+    },
+  }).then(() => {
+    allWorks = allWorks.filter((element) => 
+   parseInt(element.id) !== parseInt(workId)
+    );
+    displayModalGallery();
+    displayWorks(allWorks);
+  });
 }
 
 /* Cette fonction crée/affiche le bouton pour 
@@ -143,23 +165,6 @@ function displayAjoutPhotoBtn() {
   imageContainer.appendChild(imgType);
   imageContainer.style.justifyContent = "space-evenly";
   imageContainer.style.padding = "10px 0";
-}
-
-/* Cette fonction supprime le travail*/
-function deleteWork(workId) {
-  fetch(`http://localhost:5678/api/works/${workId}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userToken}`,
-    },
-  }).then(() => {
-    allWorks = allWorks.filter((element) => {
-      return parseInt(element.id) !== parseInt(workId);
-    });
-    displayWorks(allWorks);
-    displayModalGallery();
-  });
 }
 
 /* Cette fonction vérifie le type et la taille de l'image */
@@ -228,8 +233,8 @@ function sendForm(image, titleW, categoryValue) {
     .then((response) => response.json())
     .then((data) => {
       allWorks.push(data);
-      displayWorks(allWorks);
       modal_container.classList.remove("show");
+      displayWorks(allWorks);
     })
     .catch((error) => {
       console.error("Une erreur est survenue:", error);
@@ -237,13 +242,6 @@ function sendForm(image, titleW, categoryValue) {
 }
 
 /**DECLARATION DES EVENT LISTENERS */
-/* Quand l'utilisateur filtre les travaux */
-sectionFilter.addEventListener("click", function (event) {
-  if (event.target.classList.contains("filterCategory")) {
-    filterWorks(event.target.id);
-  }
-});
-
 /* Quand l'utilisateur clique sur login/logout */
 logElement.addEventListener("click", function (event) {
   if (logElement.textContent === "login") {
@@ -251,6 +249,13 @@ logElement.addEventListener("click", function (event) {
   } else {
     window.localStorage.removeItem("Token");
     window.location.href = "./index.html";
+  }
+});
+
+/* Quand l'utilisateur filtre les travaux */
+sectionFilter.addEventListener("click", function (event) {
+  if (event.target.classList.contains("filterCategory")) {
+    filterWorks(event.target.id);
   }
 });
 
@@ -339,6 +344,7 @@ workTitle.addEventListener("input", () => {
   updateFormValidity();
 });
 
+
 /* Quand l'utilisateur clique en dehors de l'input titre*/
 workTitle.addEventListener("focusout", () => {
   if (!titleW) {
@@ -356,12 +362,14 @@ categoryList.addEventListener("change", () => {
 });
 
 /* Quand l'utilisateur clique en dehors de l'input catégorie*/
+
 categoryList.addEventListener("focusout", () => {
   if (!categoryValue) {
     errorMessageCat.style.display = "block";
     errorMessageCat.innerText = "La catégorie est requise";
   }
 });
+
 
 /* Quand l'utilisateur clique sur le bouton valider
    envoi du formulaire*/

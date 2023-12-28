@@ -353,7 +353,7 @@ a {
   grid-column-gap: 7px;
   grid-row-gap: 30px;
   overflow-y: auto;
-  padding: 50px 0;
+  padding: 40px 0;
   box-sizing: border-box;
   border-bottom: 1px solid #B3B3B3;
 }
@@ -406,7 +406,7 @@ a {
   border-radius: 60px;
 }
 
-#validerPhotoForm {
+#validerPhotoBtnForm {
   margin-top: 28px;
   box-sizing: border-box;
   padding: 5px 35px;
@@ -420,7 +420,7 @@ a {
   border-radius: 60px;
 }
 
-#validerPhotoForm[disabled] {
+#validerPhotoBtnForm[disabled] {
 cursor: not-allowed;
 pointer-events: none;
 background-color: #A7A7A7;

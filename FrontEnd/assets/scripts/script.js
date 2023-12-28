@@ -171,16 +171,6 @@ function displayAjoutPhotoBtn() {
 function checkImageProperty(imageD) {
   let maxSizeBytes = 4 * 1024 * 1024;
 
-  if (imageD.type !== "image/jpg" && imageD.type !== "image/png") {
-    errorMessageImg.innerText = "L'image n'est pas au bon format";
-    errorMessageImg.style.display = "block";
-    imageContainer.style.justifyContent = "space-evenly";
-    imageContainer.style.padding = "10px 0";
-    selectedImg = "";
-    displayAjoutPhotoBtn();
-    return "not ok";
-  }
-
   if (imageD.size > maxSizeBytes) {
     errorMessageImg.innerText = "La taille a dépassé 4Mo";
     errorMessageImg.style.display = "block";
@@ -191,28 +181,15 @@ function checkImageProperty(imageD) {
     return "not ok";
   }
 
-  if (
-    imageD.type !== "image/jpg" &&
-    imageD.type !== "image/png" &&
-    imageD.size > maxSizeBytes
-  ) {
-    errorMessageImg.innerText = "Le format et la taille ne sont pas corrects";
-    errorMessageImg.style.display = "block";
-    imageContainer.style.justifyContent = "space-evenly";
-    imageContainer.style.padding = "10px 0";
-    selectedImg = "";
-    displayAjoutPhotoBtn();
-    return "not ok";
-  }
   return "ok";
 }
 
 /* Cette fonction change la couleur du bouton du formulaire */
 function updateFormValidity() {
   if (titleW && categoryValue && selectedImg) {
-    validerPhotoForm.disabled = false;
+    validerPhotoBtnForm.disabled = false;
   } else {
-    validerPhotoForm.disabled = true;
+    validerPhotoBtnForm.disabled = true;
   }
 }
 
@@ -293,7 +270,7 @@ document.getElementById("addImageBtn").addEventListener("click", async function 
       option.text = category.name;
       categoryList.add(option);
     }
-    validerPhotoForm.disabled = true;
+    validerPhotoBtnForm.disabled = true;
   });
 
 /* Quand l'utilisateur clique sur le bouton ajouter photo
@@ -304,7 +281,7 @@ imageContainer.addEventListener("click", function (event) {
     errorMessageImg.style.display = "none";
     const inputFile = document.createElement("input");
     inputFile.type = "file";
-
+    inputFile.accept = "image/png, image/jpg";
     inputFile.click();
 
     inputFile.onchange = () => {

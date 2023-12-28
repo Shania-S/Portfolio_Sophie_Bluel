@@ -19,4 +19,4 @@ let selectedImg;
 let titleW;
 let categoryValue;
 let categoryText;
-let validerPhotoForm = document.getElementById("validerPhotoForm");
+let validerPhotoBtnForm = document.getElementById("validerPhotoBtnForm");

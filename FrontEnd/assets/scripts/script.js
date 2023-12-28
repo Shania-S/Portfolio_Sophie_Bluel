@@ -23,6 +23,7 @@ async function getCategories(event) {
 
 /* Cette fonction crée les boutons de catégories et les affiche */
 async function displayFilterButtons() {
+  document.getElementById("tousBtn").removeAttribute('hidden');
   let categories = await getCategories();
   console.log(categories);
   for (const item of categories) {

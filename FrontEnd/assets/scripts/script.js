@@ -38,7 +38,6 @@ async function displayFilterButtons() {
 /* Cette fonction filtre les travaux en fonction de la catégorie cliquée
    et les affiche en appelant la fonction displayWorks()*/
 function filterWorks(catId) {
-
   let categoryId = catId;
   if (!isNaN(parseInt(categoryId))) {
     let works = allWorks.filter(
@@ -181,7 +180,6 @@ function checkImageProperty(imageD) {
     displayAjoutPhotoBtn();
     return "not ok";
   }
-
   return "ok";
 }
 
@@ -339,8 +337,8 @@ categoryList.addEventListener("change", () => {
   updateFormValidity();
 });
 
-/* Quand l'utilisateur clique en dehors de l'input catégorie*/
 
+/* Quand l'utilisateur clique en dehors de l'input catégorie*/
 categoryList.addEventListener("focusout", () => {
   if (!categoryValue) {
     errorMessageCat.style.display = "block";
